@@ -1,0 +1,459 @@
+{
+  "definitions": {
+    "Customer": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "firstName": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "lastName": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "email": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "birthDate": {
+          "type": "cds.Date"
+        },
+        "consentGiven": {
+          "type": "cds.Boolean"
+        }
+      }
+    },
+    "Purchase": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "customer": {
+          "type": "cds.Association",
+          "target": "Customer",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "product": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "amount": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 2
+        },
+        "purchaseDate": {
+          "type": "cds.DateTime"
+        }
+      }
+    },
+    "ConsentLog": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "customer": {
+          "type": "cds.Association",
+          "target": "Customer",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "type": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "consented": {
+          "type": "cds.Boolean"
+        },
+        "timestamp": {
+          "type": "cds.DateTime"
+        }
+      }
+    },
+    "AuditLog": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "timestamp": {
+          "type": "cds.DateTime"
+        },
+        "eventType": {
+          "type": "cds.String"
+        },
+        "entity": {
+          "type": "cds.String"
+        },
+        "details": {
+          "type": "cds.LargeString"
+        }
+      }
+    },
+    "NetworkContact": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 20
+        },
+        "firstName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "lastName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "linkedin": {
+          "type": "cds.String",
+          "length": 200
+        },
+        "company": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "position": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "connectedOn": {
+          "type": "cds.Date"
+        },
+        "status": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "notes": {
+          "type": "cds.String",
+          "length": 500
+        },
+        "isPriorityCompany": {
+          "type": "cds.Boolean"
+        },
+        "isSenior": {
+          "type": "cds.Boolean"
+        },
+        "relevanceScore": {
+          "type": "cds.Integer"
+        },
+        "contactRoles": {
+          "type": "cds.String",
+          "length": 255
+        },
+        "campaignSegments": {
+          "type": "cds.String",
+          "length": 255
+        },
+        "lastContactedOn": {
+          "type": "cds.Timestamp"
+        }
+      }
+    },
+    "SAP_Emarsys_CampaignEvent": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "@default": "uuid",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "name": {
+          "type": "cds.String"
+        },
+        "eventCode": {
+          "type": "cds.String"
+        },
+        "description": {
+          "type": "cds.String"
+        }
+      }
+    },
+    "LoyaltyService": {
+      "@source": "srv/project.cds",
+      "kind": "service"
+    },
+    "LoyaltyService.Customers": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "Customer"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "firstName": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "lastName": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "email": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "birthDate": {
+          "type": "cds.Date"
+        },
+        "consentGiven": {
+          "type": "cds.Boolean"
+        }
+      }
+    },
+    "LoyaltyService.Purchases": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "Purchase"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "customer": {
+          "type": "cds.Association",
+          "target": "LoyaltyService.Customers",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "product": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "amount": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 2
+        },
+        "purchaseDate": {
+          "type": "cds.DateTime"
+        }
+      }
+    },
+    "LoyaltyService.ConsentLogs": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "ConsentLog"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "customer": {
+          "type": "cds.Association",
+          "target": "LoyaltyService.Customers",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "type": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "consented": {
+          "type": "cds.Boolean"
+        },
+        "timestamp": {
+          "type": "cds.DateTime"
+        }
+      }
+    },
+    "LoyaltyService.AuditLogs": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "AuditLog"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "timestamp": {
+          "type": "cds.DateTime"
+        },
+        "eventType": {
+          "type": "cds.String"
+        },
+        "entity": {
+          "type": "cds.String"
+        },
+        "details": {
+          "type": "cds.LargeString"
+        }
+      }
+    },
+    "LoyaltyService.NetworkContacts": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "NetworkContact"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 20
+        },
+        "firstName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "lastName": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "linkedin": {
+          "type": "cds.String",
+          "length": 200
+        },
+        "company": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "position": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "connectedOn": {
+          "type": "cds.Date"
+        },
+        "status": {
+          "type": "cds.String",
+          "length": 20
+        },
+        "notes": {
+          "type": "cds.String",
+          "length": 500
+        },
+        "isPriorityCompany": {
+          "type": "cds.Boolean"
+        },
+        "isSenior": {
+          "type": "cds.Boolean"
+        },
+        "relevanceScore": {
+          "type": "cds.Integer"
+        },
+        "contactRoles": {
+          "type": "cds.String",
+          "length": 255
+        },
+        "campaignSegments": {
+          "type": "cds.String",
+          "length": 255
+        },
+        "lastContactedOn": {
+          "type": "cds.Timestamp"
+        }
+      }
+    },
+    "LoyaltyService.CampaignEvents": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "SAP_Emarsys_CampaignEvent"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "@default": "uuid",
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "name": {
+          "type": "cds.String"
+        },
+        "eventCode": {
+          "type": "cds.String"
+        },
+        "description": {
+          "type": "cds.String"
+        }
+      }
+    },
+    "LoyaltyService.triggerEmarsys": {
+      "kind": "action",
+      "params": {
+        "contactID": {
+          "type": "cds.String"
+        },
+        "eventCode": {
+          "type": "cds.String"
+        }
+      },
+      "returns": {
+        "elements": {
+          "success": {
+            "type": "cds.Boolean"
+          },
+          "status": {
+            "type": "cds.String"
+          },
+          "emailPreview": {
+            "type": "cds.String"
+          }
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v5.9.2",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}

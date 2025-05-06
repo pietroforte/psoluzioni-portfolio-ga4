@@ -1,0 +1,35 @@
+{
+  "name": "working-pcx-engage",
+  "version": "1.0.0",
+  "dependencies": {
+    "@sap/cds": "^8.9.1",
+    "axios": "^1.6.7",
+    "csv-parse": "^5.6.0",
+    "next": "^15.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sqlite3": "^5.1.6"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "vercel-build": "next build"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.0",
+    "@types/react": "19.1.2",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "5.8.3"
+  },
+  "description": "Emarsys Loyalty Campaign Simulator with Vercel-compatible backend # psoluzioni-emarsys-agentforce",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

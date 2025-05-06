@@ -1,0 +1,25 @@
+{
+  "model": ["srv/project.cds"],
+  "requires": {
+    "db": {
+      "kind": "sqlite",
+      "credentials": {
+        "database": "db.sqlite"
+      }
+    }
+  },
+  "build": {
+    "target": "gen",
+    "tasks": [
+      {
+        "for": "nodejs",
+        "src": "srv/project.cds"
+      }
+    ]
+  },
+ "app": {
+  "folder": "app"
+  }
+
+
+}

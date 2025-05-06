@@ -1,0 +1,12 @@
+{
+  "name": "working-pcx-engage",
+  "version": "1.0.0",
+  "dependencies": {
+    "@sap/cds": "^8.9.1",
+    "sqlite3": "^5.1.6",
+    "axios": "^1.6.7"
+  },
+  "scripts": {
+    "start": "cds watch"
+  }
+}

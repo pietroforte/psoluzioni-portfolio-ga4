@@ -1,0 +1,32 @@
+[
+  {
+    "id": "d1",
+    "title": "Website Redesign Project",
+    "contact": "Jane Doe",
+    "company": "Acme Inc.",
+    "stage": "Proposal Sent",
+    "value": 15000,
+    "lastContacted": "2025-04-28",
+    "notes": "Needs budget approval from VP."
+  },
+  {
+    "id": "d2",
+    "title": "CRM Migration",
+    "contact": "Mark Taylor",
+    "company": "Globex Corp",
+    "stage": "Discovery",
+    "value": 22000,
+    "lastContacted": "2025-04-26",
+    "notes": "Interested in AI tools for sales automation."
+  },
+  {
+    "id": "d3",
+    "title": "Sales Enablement Strategy",
+    "contact": "Alicia Chan",
+    "company": "NextGen Sales",
+    "stage": "Negotiation",
+    "value": 18000,
+    "lastContacted": "2025-04-29",
+    "notes": "Asked for detailed proposal. Follow-up scheduled next week."
+  }
+]

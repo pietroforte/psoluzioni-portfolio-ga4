@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="LoyaltyService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <Annotation Term="Core.Links">
+        <Collection>
+          <Record>
+            <PropertyValue Property="rel" String="author"/>
+            <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+          </Record>
+        </Collection>
+      </Annotation>
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="Customers" EntityType="LoyaltyService.Customers"/>
+        <EntitySet Name="Purchases" EntityType="LoyaltyService.Purchases">
+          <NavigationPropertyBinding Path="customer" Target="Customers"/>
+        </EntitySet>
+        <EntitySet Name="ConsentLogs" EntityType="LoyaltyService.ConsentLogs">
+          <NavigationPropertyBinding Path="customer" Target="Customers"/>
+        </EntitySet>
+        <EntitySet Name="AuditLogs" EntityType="LoyaltyService.AuditLogs"/>
+        <EntitySet Name="NetworkContacts" EntityType="LoyaltyService.NetworkContacts"/>
+        <EntitySet Name="CampaignEvents" EntityType="LoyaltyService.CampaignEvents"/>
+        <ActionImport Name="triggerEmarsys" Action="LoyaltyService.triggerEmarsys"/>
+      </EntityContainer>
+      <EntityType Name="Customers">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="firstName" Type="Edm.String" MaxLength="50"/>
+        <Property Name="lastName" Type="Edm.String" MaxLength="50"/>
+        <Property Name="email" Type="Edm.String" MaxLength="100"/>
+        <Property Name="birthDate" Type="Edm.Date"/>
+        <Property Name="consentGiven" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="Purchases">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="customer" Type="LoyaltyService.Customers">
+          <ReferentialConstraint Property="customer_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="customer_ID" Type="Edm.Guid"/>
+        <Property Name="product" Type="Edm.String" MaxLength="100"/>
+        <Property Name="amount" Type="Edm.Decimal" Precision="10" Scale="2"/>
+        <Property Name="purchaseDate" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="ConsentLogs">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="customer" Type="LoyaltyService.Customers">
+          <ReferentialConstraint Property="customer_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="customer_ID" Type="Edm.Guid"/>
+        <Property Name="type" Type="Edm.String" MaxLength="50"/>
+        <Property Name="consented" Type="Edm.Boolean"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="AuditLogs">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="timestamp" Type="Edm.DateTimeOffset"/>
+        <Property Name="eventType" Type="Edm.String"/>
+        <Property Name="entity" Type="Edm.String"/>
+        <Property Name="details" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="NetworkContacts">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.String" MaxLength="20" Nullable="false"/>
+        <Property Name="firstName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="lastName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="linkedin" Type="Edm.String" MaxLength="200"/>
+        <Property Name="company" Type="Edm.String" MaxLength="100"/>
+        <Property Name="position" Type="Edm.String" MaxLength="100"/>
+        <Property Name="connectedOn" Type="Edm.Date"/>
+        <Property Name="status" Type="Edm.String" MaxLength="20"/>
+        <Property Name="notes" Type="Edm.String" MaxLength="500"/>
+        <Property Name="isPriorityCompany" Type="Edm.Boolean"/>
+        <Property Name="isSenior" Type="Edm.Boolean"/>
+        <Property Name="relevanceScore" Type="Edm.Int32"/>
+        <Property Name="contactRoles" Type="Edm.String" MaxLength="255"/>
+        <Property Name="campaignSegments" Type="Edm.String" MaxLength="255"/>
+        <Property Name="lastContactedOn" Type="Edm.DateTimeOffset" Precision="7"/>
+      </EntityType>
+      <EntityType Name="CampaignEvents">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="eventCode" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+      </EntityType>
+      <ComplexType Name="return_LoyaltyService_triggerEmarsys">
+        <Property Name="success" Type="Edm.Boolean"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="emailPreview" Type="Edm.String"/>
+      </ComplexType>
+      <Action Name="triggerEmarsys" IsBound="false">
+        <Parameter Name="contactID" Type="Edm.String"/>
+        <Parameter Name="eventCode" Type="Edm.String"/>
+        <ReturnType Type="LoyaltyService.return_LoyaltyService_triggerEmarsys"/>
+      </Action>
+      <Annotations Target="LoyaltyService.Customers/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="LoyaltyService.Purchases/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="LoyaltyService.ConsentLogs/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="LoyaltyService.AuditLogs/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="LoyaltyService.CampaignEvents/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
