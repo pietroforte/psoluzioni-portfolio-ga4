@@ -3,3 +3,5 @@ node_modules/
 .env
 .vercel
 .env.local
+fastapi-openai-backend/
+fastapi-openai-backend/

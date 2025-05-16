@@ -15,10 +15,9 @@ export default function Home() {
 
         {/* Campaign Experiences */}
         <Section title="🎯 Campaign Experiences">
-        <LinkCard href="/emarsys" label="🚀 Emarsys Only" bg="bg-blue-600" />
-        <LinkCard href="/agentforce" label="🧠 AgentForce Only" bg="bg-pink-600" />
-        <LinkCard href="/emarsys-agentforce" label="🔀 Unified Emarsys + AgentForce" bg="bg-cyan-700" />
-        <LinkCard href="/product-signal-simulator" label="📡 Product Signal Simulator (AI + CRM)" bg="bg-teal-700" />
+          <LinkCard href="/emarsys" label="🚀 Emarsys Only" bg="bg-blue-600" />
+          <LinkCard href="/agentforce" label="🧠 AgentForce Only" bg="bg-pink-600" />
+          <LinkCard href="/emarsys-agentforce" label="🔀 Unified Emarsys + AgentForce" bg="bg-cyan-700" />
         </Section>
 
         {/* Sales Simulations */}
